@@ -853,7 +853,11 @@ class Genome(object):
                 # check to see if the status is ok (or we are ignoring it)
                 if not ignore_status and sample_info["STATUS"] == "FAIL":
                     continue
-                genotype = Genotype(*sample_info["GT"])
+                # I faced an error, when sample_info["GT"] is ()
+                if not sample_info['GT']:
+                    genotype = Genotype(*sample_info["GT"], None)
+                else
+                    genotype = Genotype(*sample_info["GT"])
                 # return the call
                 ref_bases,index,alt_bases = self._get_variant_for_genotype_in_vcf_record(genotype, record)
 
